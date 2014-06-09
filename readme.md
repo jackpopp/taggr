@@ -5,7 +5,7 @@ Construct a new taggr class with your application key and a username
 $taggr = new Taggr\Taggr('key', 'username');
 ```
 
-Fetch tags with the fetchTags function
+Fetch tags with the fetchTags function, fetching tags will return an array of tags ordered alphabetically
 ```php
 $tags = $taggr->fetchTags();
 ```

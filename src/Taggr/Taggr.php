@@ -77,15 +77,24 @@ class Taggr
 		return self::$LIMIT;
 	}
 
+	/**
+	* Increments the offset based on the supplied integer
+	*
+	* @param integer
+	* @return self
+	**/
+
 	public function incrementOffset($amount)
 	{
 		$this->offset+=$amount;
 		return $this;
 	}
 
-	/*
+	/**
 	* Fetches tags from api, filters out duplicate tags and pushes into the tags array
-	*/
+	*
+	* @return array
+	**/
 
 	public function fetchTags()
 	{
@@ -108,9 +117,13 @@ class Taggr
 		return $this->getTags();
 	}
 
-	/*
+	/**
 	* Fetches the posts from tumblr api based on the passed username, offset and limit
-	*/
+	*
+	* @param integer
+	* @param integer
+	* @return object
+	**/
 
 	public function fetchPosts($offset = 0, $limit = 20)
 	{
@@ -126,9 +139,12 @@ class Taggr
 		return json_decode($request)->response->posts;
 	}
 
-	/*
+	/**
 	* Iterate through posts array and pull out the tags, ignore any duplicate tags
-	*/
+	*
+	* @param array
+	* @return void
+	**/
 
 	public function getTagsFromPosts($posts)
 	{
@@ -138,9 +154,13 @@ class Taggr
 		}
 	}
 
-	/*
+	/**
 	* Compare the new tags found from a post to the current tags and return any tags that are not dupliate
-	*/
+	*
+	* @param array
+	* @param array
+	* @return array
+	**/
 
 	public function filterTags($newTags, $currentTags)
 	{
@@ -152,23 +172,29 @@ class Taggr
 		return $tagsToMerge;
 	}
 
-	/*
+	/**
 	* Write tags to file
-	*/
+	*
+	* @param array
+	* @param string
+	* @return void
+	**/
 
 	public function writeTags($tags, $filename = 'tags.json')
 	{
 		$toWrite = array(
 			'username' => $this->getUsername(),
-			'tags'     => $tags()
+			'tags'     => $tags
 		);
 
 		file_put_contents($filename, json_encode($toWrite));
 	}
 
-	/*
-	* Read tags from file
-	*/
+	/**
+	* Read tags from file, return with json header
+	*
+	* @return void
+	**/
 
 	public function readTags()
 	{
